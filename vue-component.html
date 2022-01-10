@@ -9,6 +9,7 @@
 <body>
     <div id="app">
         <button>컴포넌트 등록</button>
+        <my-local-component></my-local-component>
         <my-component></my-component>
     </div>
 
@@ -18,8 +19,15 @@
             template: '<div>마이 컴포넌트 🎀</div>'
         })
 
+        var cmp = {
+            template: '<div>로컬 컴포넌트 🥐</div>'
+        }
+
         new Vue({
-            el: '#app'
+            el: '#app',
+            components: {
+                'my-local-component': cmp
+            }
         })
     </script>
 </body>
