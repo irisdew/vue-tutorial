@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Named View Sample</title>
+</head>
+<body>
+    <div id="app">
+        <router-view name="header"></router-view>
+        <router-view></router-view>
+        <router-view name="footer"></router-view>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+        <script>
+            var Body = { template: '<div>바-디</div>' };
+            var Header = { template: '<div>헤-더</div>' };
+            var Footer = { template: '<div>푸-터</div>' };
+
+            var router = new VueRouter({
+                routes: [
+                    {
+                        path:"/",
+                        components: {
+                            default: Body,
+                            header: Header, 
+                            footer: Footer
+                        }
+                    }
+                ]
+            })
+
+            var app = new Vue({
+                router
+            }).$mount('#app');
+        </script>
+    </div>
+</body>
+</html>
