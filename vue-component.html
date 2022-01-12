@@ -11,6 +11,7 @@
         <button>컴포넌트 등록</button>
         <my-local-component></my-local-component>
         <my-component></my-component>
+        <child-component v-bind:propsdata="message"></child-component>
     </div>
 
     <hr />
@@ -31,10 +32,18 @@
             template: '<div>로컬 컴포넌트 🥐</div>'
         }
 
+        Vue.component('child-component', {
+            props: ['propsdata'],
+            template: '<p>{{ propsdata }}<p>'
+        });
+
         new Vue({
             el: '#app',
             components: {
                 'my-local-component': cmp
+            },
+            data: {
+                message: '자식 컴포넌트에 들어가는 메시지~~'
             }
         })
 
