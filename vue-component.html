@@ -11,7 +11,7 @@
         <button>컴포넌트 등록</button>
         <my-local-component></my-local-component>
         <my-component></my-component>
-        <child-component v-bind:propsdata="message"></child-component>
+        <child-component v-bind:propsdata="message" v-on:show-log="printText"></child-component>
     </div>
 
     <hr />
@@ -34,7 +34,12 @@
 
         Vue.component('child-component', {
             props: ['propsdata'],
-            template: '<p>{{ propsdata }}<p>'
+            template: '<button v-on:click="showLog">{{ propsdata }}</button>', 
+            methods: {
+                showLog: function() {
+                    this.$emit('show-log');
+                }
+            }
         });
 
         new Vue({
@@ -43,7 +48,12 @@
                 'my-local-component': cmp
             },
             data: {
-                message: '자식 컴포넌트에 들어가는 메시지~~'
+                message: 'show button'
+            },
+            methods: {
+                printText: function() {
+                    console.log("recived an event");
+                }
             }
         })
 
