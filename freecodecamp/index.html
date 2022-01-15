@@ -2,11 +2,40 @@
 <html lang="en">
 <head>
     <title>Vue 3 Basics</title>
+    <style>
+        .box {
+            background-color: teal;
+            width: 200px;
+            height: 200px;
+        }
+        .box.two {
+            background-color: powderblue;
+        }
+        .box.three {
+            background-color: coral;
+        }
+    </style>
 </head>
 
 <body>
     <div id="app">
         {{ greeting }}
+        <input v-model="greeting" /> 
+        <!-- input창에 value로 greeting에 지정한 값이 보여짐
+        input value를 수정하면 상단에 있는 greeting도 함께 변화
+        => two way data binding 양방향 데이터 바인딩 -->
+
+        <hr />
+
+        <div v-if="isVisible" class="box"></div>
+        <div v-else-if="isVisible2" class="box two"></div>
+        <div v-else class="box three"></div>
+        <div v-show="isVisible" class="box three"></div>
+        <!-- v-if는 렌더링 자체를 안함 
+        v-show는 렌더링은 되지만  style: display: none; 처리
+        v-if는 Loading spinner 같은거 처리할 때 유용, DOM에 아예 추가하고 싶지 않을 떄
+        v-show는 비교적 변화가 빈번할 때 사용하기 좋음, 자주 변경될때에는 DOM에 계속 추가,제거를 반복하는 것보다 css 속성만 변경하는 것이 성능이 좋음 
+        -->
     </div>
     
     <script src="https://unpkg.com/vue@next"></script>
@@ -14,12 +43,13 @@
         let app = Vue.createApp({
             data: function () {
                 return {
-                    greeting: '안녕 뷰쓰리'
+                    greeting: '안녕 뷰쓰리',
+                    isVisible: false,
+                    isVisible2: false,
                 }
             }
         })
         app.mount('#app')
     </script>
 </body>
-
-</html>l
+</html>
