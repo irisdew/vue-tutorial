@@ -29,9 +29,8 @@
             template: `
                 <form @submit.prevent="handleSubmit">
                     <h1>{{ title }}</h1>
-                    <custom-input type="email" v-bind:label="emailLabel" />
-                    <custom-input type="password" label="Password: " />
-                    <!--v-bind나 :(축약표현)이 없으면 vue는 변수명을 찾지 않고 바로 전달해줌-->
+                    <custom-input type="email" v-model="email" :label="emailLabel" />
+                    <custom-input type="password" v-model="password" :label="passwordLabel" />
                     <button>LOGIN</button>
                 </form>
             `,
@@ -39,8 +38,8 @@
             data() {
                 return {
                     title: 'Login Form',
-                    email: '',
-                    password: '',
+                    email: 'asdfas',
+                    password: 'qweqweq',
                     emailLabel: "Email: ",
                     passwordLabel: "Password: "
                 }
@@ -58,12 +57,28 @@
                 <input type="text" v-model="inputValue" />
             </label>
             `,
-            props: ['label'],
-            data() {
-                return {
-                    inputValue: ''
+            props: ['label', 'modelValue'],
+            // v-model로 전달된 값이 modelValue로 온다
+            computed: {
+                inputValue: {
+                    get() {
+                        return this.modelValue;
+                    },
+                    set(value) {
+                        this.$emit('update:modelValue', value)
+                        // 다른 컴포넌트로 이벤트를 내보낼 수 있음, $emit을 통해 데이터를 전달 할 수 있음
+                    }
                 }
-            }
+                // 부모에서 자식으로 전달되는 props는 immutable함
+                // 전달받은 props를 자식컴포넌트에서 변경할 수 없음, 부모컴포넌트에서 변경해야 함
+                // 전달받은 props를 변경하려하면 [Vue warn]: Attempting to mutate prop "~~". Props are readonly 라는 경고! 콘솔에 뜸
+                // 그래서 inputValue라는 어떤 extra variable을 만든 뒤, getter/setter 함수를 사용한다.
+            },
+            // data() {
+            //     return {
+            //         inputValue: ''
+            //     }
+            // }
         })
 
         app.mount('#app');
