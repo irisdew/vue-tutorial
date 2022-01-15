@@ -9,6 +9,11 @@
 <body>
     <div id="app">
         <button v-on:click="getData">프레임워크 목록 가져오기</button>
+        <ul>
+            <li>
+                {{ ourBe }}
+            </li>
+        </ul>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -16,10 +21,14 @@
     <script>
         new Vue({
             el: "#app",
+            data: {
+                ourBe: "null"
+            },
             methods: {
                 getData: function() {
                     axios.get('https://raw.githubusercontent.com/joshua1988/doit-vuejs/master/data/demo.json').then(function(response){
-                        console.log(response);
+                        console.log(response.data);
+                        this.ourBe = response.data.be1;
                     })
                 }
             }
