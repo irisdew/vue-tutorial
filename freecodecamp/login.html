@@ -29,6 +29,9 @@
             template: `
                 <form @submit.prevent="handleSubmit">
                     <h1>{{ title }}</h1>
+                    <p v-for="(str, i) in inputs" :key="i">{{ i }}.{{ str }}</p>
+                    <!--loop 돌리는 모든 것에는 key가 필수로 지정되어야한다. 성능에 도움이 되고 애플리케이션의 버그를 방지.
+                    나중에 .vue 파일로 프로그래밍할때 key값이 없으면 linter나 코드에디터에서 경고할것임-->
                     <custom-input type="email" v-model="email" :label="emailLabel" />
                     <custom-input type="password" v-model="password" :label="passwordLabel" />
                     <button>LOGIN</button>
@@ -38,8 +41,13 @@
             data() {
                 return {
                     title: 'Login Form',
-                    email: 'asdfas',
-                    password: 'qweqweq',
+                    inputs: [
+                        '멍멍이', 
+                        '냥냥이', 
+                        '햄찌'
+                    ],
+                    email: '',
+                    password: '',
                     emailLabel: "Email: ",
                     passwordLabel: "Password: "
                 }
