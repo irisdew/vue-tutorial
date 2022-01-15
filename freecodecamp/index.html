@@ -14,11 +14,16 @@
         .box.three {
             background-color: coral;
         }
+        [v-cloak] {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" v-cloak>
+        <!-- v-cloak : hide anything from rendering until whole view application is ready
+        브라우저가 너무 빨라서 확인하기는 힘들지만 새로고침하고 페이지가 렌더링 되기 이전 <div id="app">에 v-cloak 속성이 있다가 전체 페이지가 로드되면 사라짐-->
         {{ greeting }}
         <input v-model="greeting" /> 
         <!-- input창에 value로 greeting에 지정한 값이 보여짐
