@@ -25,17 +25,22 @@
         <!-- v-cloak : hide anything from rendering until whole view application is ready
         브라우저가 너무 빨라서 확인하기는 힘들지만 새로고침하고 페이지가 렌더링 되기 이전 <div id="app">에 v-cloak 속성이 있다가 전체 페이지가 로드되면 사라짐-->
         {{ greeting }}
-        <input v-model="greeting" /> 
+        <input @keyup.enter="greet(greeting + '!!!')" v-model="greeting" /> 
         <!-- input창에 value로 greeting에 지정한 값이 보여짐
         input value를 수정하면 상단에 있는 greeting도 함께 변화
         => two way data binding 양방향 데이터 바인딩 -->
 
         <hr />
 
+        <button @click.right="isVisible = true">Show Box</button>
+        <!-- click.prevent.stop 같은 것도 가능 -->
+        <button v-on:click="isVisible = !isVisible">Toggle Box</button>
+        <button @click="toggleIsVisible2">Toggle isVisible2</button>
+
         <div v-if="isVisible" class="box"></div>
         <div v-else-if="isVisible2" class="box two"></div>
         <div v-else class="box three"></div>
-        <div v-show="isVisible" class="box three"></div>
+        <div v-show="isVisible" class="box two"></div>
         <!-- v-if는 렌더링 자체를 안함 
         v-show는 렌더링은 되지만  style: display: none; 처리
         v-if는 Loading spinner 같은거 처리할 때 유용, DOM에 아예 추가하고 싶지 않을 떄
@@ -51,6 +56,14 @@
                     greeting: '안녕 뷰쓰리',
                     isVisible: false,
                     isVisible2: false,
+                }
+            },
+            methods: {
+                toggleIsVisible2() {
+                   this.isVisible2 = !this.isVisible2;
+                },
+                greet(greeting) {
+                    console.log(greeting);
                 }
             }
         })
