@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<head>
+    <title>Vue Lifecycle Hooks</title>
+    <style>
+        .box {
+            background-color: turquoise;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button @click="toggleBox">Toggle Button</button>
+        <test-box v-if="isVisible" />
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        let app = Vue.createApp({
+            data: function() {
+                return {
+                    isVisible: true
+                }
+            },
+            methods: {
+                toggleBox: function() {
+                    this.isVisible = !this.isVisible;
+                }
+            },
+            updated() {
+                console.log('updated')
+                // 여기에서는 data인 isVisible이 updated 될 때마다 실행
+            }
+        })
+        app.component('test-box', {
+            template: `
+                <div class="box"></div>
+            `,
+            created() {
+                console.log("created")
+            },
+            mounted() {
+                console.log("mounted")
+            },
+            unmounted() {
+                console.log("unmounted")
+            },
+        })
+        app.mount("#app")
+
+        // Lifecycle Hook
+        //:function that trigger to run at specific lifecycle point of component.
+        // * Check if user is authorized (created, mounted)
+        // * API Calls
+        // * Creating or removing events (mounted 될 떼 event를 생성하고 unmounted될 때 제거하여 정리)
+        // * Getting or cleaning up data
+    </script>
+</body>
+</html>
+
+
