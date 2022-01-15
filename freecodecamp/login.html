@@ -20,6 +20,7 @@
 
 
 
+
     <script src="https://unpkg.com/vue@next"></script>
     <script>
         let app = Vue.createApp({});
@@ -28,21 +29,39 @@
             template: `
                 <form @submit.prevent="handleSubmit">
                     <h1>{{ title }}</h1>
-                    <input type="email" v-model="email" />
-                    <input type="password" v-model="password" />
+                    <custom-input type="email" v-bind:label="emailLabel" />
+                    <custom-input type="password" label="Password: " />
+                    <!--v-bind나 :(축약표현)이 없으면 vue는 변수명을 찾지 않고 바로 전달해줌-->
                     <button>LOGIN</button>
                 </form>
             `,
+            components: ['custom-input'],
             data() {
                 return {
                     title: 'Login Form',
                     email: '',
-                    password: ''
+                    password: '',
+                    emailLabel: "Email: ",
+                    passwordLabel: "Password: "
                 }
             },
             methods: {
                 handleSubmit() {
                     console.log(this.email, this.password)
+                }
+            }
+        })
+        app.component('custom-input', {
+            template: `
+            <label>
+                {{ label }}
+                <input type="text" v-model="inputValue" />
+            </label>
+            `,
+            props: ['label'],
+            data() {
+                return {
+                    inputValue: ''
                 }
             }
         })
