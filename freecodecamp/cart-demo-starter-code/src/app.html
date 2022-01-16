@@ -25,7 +25,7 @@
         </nav>
         <a @click="toggleSidebar" class="top-bar-cart-link">
           <i class="icofont-cart-alt icofont-1x"></i>
-          <span>Cart (0)</span>
+          <span>Cart ({{ totalItems }})</span>
         </a>
       </header>
 
@@ -106,6 +106,11 @@
             cart : {}
           }
         },
+        computed: {
+          totalItems() {
+            return Object.keys(this.cart).length;
+          }
+        },
         methods: {
           addToCart(name, index) {
             if (!this.cart[name]) this.cart[name] = 0;
@@ -132,6 +137,10 @@
           getPrice(key) {
             const product = this.inventory.find(p => p.name === key);
             return product.price.USD;
+          },
+          getIcon(key) {
+            const product = this.inventory.find(p => p.name === key);
+            return product.icon;
           },
           calculateTotal() {
               const total = Object.entries(this.cart).reduce((acc, [name, quantity], idx) => {
@@ -165,7 +174,7 @@
                   </thead>
                   <tbody>
                     <tr v-for="(quantity, key, i) in cart" :key="i">
-                      <td><i class="icofont-carrot icofont-3x"></i></td>
+                      <td><i :class="'icofont-3x icofont-'+getIcon(key)"></i></td>
                       <td>{{ key }}</td>
                       <td>\${{ getPrice(key) }}</td>
                       <td class="center">{{ quantity }}</td>
