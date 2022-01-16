@@ -23,7 +23,7 @@
             <span>Past Orders</span>
           </a>
         </nav>
-        <a @click="toggleSidebar"class="top-bar-cart-link">
+        <a @click="toggleSidebar" class="top-bar-cart-link">
           <i class="icofont-cart-alt icofont-1x"></i>
           <span>Cart (0)</span>
         </a>
@@ -88,6 +88,7 @@
         :toggle="toggleSidebar"
         :cart="cart"
         :inventory="inventory"
+        :remove="removeItem"
       />
 
       <footer>
@@ -112,6 +113,9 @@
           },
           toggleSidebar() {
             this.showSidebar = !this.showSidebar;
+          },
+          removeItem(name) {
+            delete this.cart[name];
           }
         },
         async mounted() {
@@ -122,10 +126,7 @@
       })
 
       app.component('sidebar', {
-        props: ['toggle', 'cart', 'inventory'],
-        computed: {
-
-        },
+        props: ['toggle', 'cart', 'inventory', 'remove'],
         methods: {
           getPrice(key) {
             const product = this.inventory.find(p => p.name === key);
@@ -136,7 +137,7 @@
               return acc + (quantity * this.getPrice(name));
             }, 0)
             return total.toFixed(2);
-          }
+          },
         },
         template: `
           <aside class="cart-container">
@@ -169,7 +170,7 @@
                       <td class="center">{{ quantity }}</td>
                       <td>\${{ (quantity * getPrice(key)).toFixed(2) }}</td>
                       <td class="center">
-                        <button class="btn btn-light cart-remove">
+                        <button @click="remove(key)" class="btn btn-light cart-remove">
                           &times;
                         </button>
                       </td>
