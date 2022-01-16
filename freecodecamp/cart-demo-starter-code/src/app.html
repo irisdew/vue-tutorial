@@ -109,7 +109,6 @@
           addToCart(name, index) {
             if (!this.cart[name]) this.cart[name] = 0;
             this.cart[name] += this.inventory[index].quantity;
-            console.log(this.cart);
           },
           toggleSidebar() {
             this.showSidebar = !this.showSidebar;
@@ -125,14 +124,18 @@
       app.component('sidebar', {
         props: ['toggle', 'cart', 'inventory'],
         computed: {
-          cartTotal() {
-            return (this.cart.carrots * 4.82).toFixed(2);
-          }
+
         },
         methods: {
           getPrice(key) {
             const product = this.inventory.find(p => p.name === key);
             return product.price.USD;
+          },
+          calculateTotal() {
+              const total = Object.entries(this.cart).reduce((acc, [name, quantity], idx) => {
+              return acc + (quantity * this.getPrice(name));
+            }, 0)
+            return total.toFixed(2);
           }
         },
         template: `
@@ -176,7 +179,7 @@
     
                 <p class="center"><em>No items in cart</em></p>
                 <div class="spread">
-                  <span><strong>Total:</strong>\${{ cartTotal }}</span>
+                  <span><strong>Total: </strong>\${{ calculateTotal() }}</span>
                   <button class="btn btn-light">Checkout</button>
                 </div>
               </div>
