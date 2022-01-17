@@ -25,13 +25,13 @@
             <label>Quantity:</label>
           </div>
           <div class="cell">
-            <input type="number" v-model.number="product.quantity" />
+            <input type="number" v-model.number="quantity" />
           </div>
         </div>
       </form>
     </div>
     <div class="card-footer">
-      <button class="btn btn-light" @click="addToCart(product.name, index)">
+      <button class="btn btn-light" @click="addToCart(product.name, quantity)">
         Add to cart
       </button>
     </div>
