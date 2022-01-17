@@ -25,9 +25,9 @@
           <tr v-for="(quantity, key, i) in cart" :key="i">
             <td><i :class="'icofont-3x icofont-'+getIcon(key)"></i></td>
             <td>{{ key }}</td>
-            <td>\${{ getPrice(key) }}</td>
+            <td>${{ getPrice(key) }}</td>
             <td class="center">{{ quantity }}</td>
-            <td>\${{ (quantity * getPrice(key)).toFixed(2) }}</td>
+            <td>${{ (quantity * getPrice(key)).toFixed(2) }}</td>
             <td class="center">
               <button @click="remove(key)" class="btn btn-light cart-remove">
                 &times;
@@ -39,7 +39,7 @@
 
       <p class="center" v-if="!Object.keys(cart).length"><em>No items in cart</em></p>
       <div class="spread">
-        <span><strong>Total: </strong>\${{ calculateTotal() }}</span>
+        <span><strong>Total: </strong>${{ calculateTotal() }}</span>
         <button class="btn btn-light">Checkout</button>
       </div>
     </div>

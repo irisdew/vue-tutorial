@@ -59,6 +59,6 @@
 <script>
 export default {
   name: "Home",
-  props: ['inventory']
+  props: ['inventory', 'addToCart' ]
 };
 </script>
