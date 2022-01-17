@@ -46,3 +46,25 @@
   </div>
 </aside>
 </template>
+
+<script>
+export default {
+  props: ['toggle', 'cart', 'inventory', 'remove'],
+  methods: {
+      getPrice(key) {
+        const product = this.inventory.find(p => p.name === key);
+        return product.price.USD;
+      },
+      getIcon(key) {
+        const product = this.inventory.find(p => p.name === key);
+        return product.icon;
+      },
+      calculateTotal() {
+          const total = Object.entries(this.cart).reduce((acc, [name, quantity], idx) => {
+          return acc + (quantity * this.getPrice(name));
+        }, 0)
+        return total.toFixed(2);
+      },
+    },
+}
+</script>

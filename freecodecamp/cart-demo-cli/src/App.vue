@@ -12,16 +12,16 @@
         <span>Past Orders</span>
       </router-link>
     </nav>
-    <!-- <a @click="toggleSidebar" class="top-bar-cart-link">
-          <i class="icofont-cart-alt icofont-1x"></i>
-          <span>Cart ({{ totalItems }})</span>
-        </a> -->
+    <div @click="toggleSidebar" class="top-bar-cart-link">
+      <i class="icofont-cart-alt icofont-1x"></i>
+      <span>Cart ({{ totalItems }})</span>
+    </div>
   </header>
   <!-- <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </div> -->
-  <router-view />
+  <router-view :inventory="inventory" />
 
   <Sidebar
     v-if="showSidebar"
@@ -34,6 +34,7 @@
 
 <script>
 import Sidebar from "@/components/Sidebar.vue";
+import food from "@/food.json";
 
 export default {
   components: {
@@ -41,8 +42,15 @@ export default {
   },
   data() {
     return {
-      showSidebar: true,
+      showSidebar: false,
+      inventory: food,
+      cart: {},
     };
+  },
+  computed: {
+    totalItems() {
+      return Object.keys(this.cart).length;
+    },
   },
   methods: {
     addToCart(name, index) {
