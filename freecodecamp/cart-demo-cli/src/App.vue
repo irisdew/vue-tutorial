@@ -21,7 +21,7 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </div> -->
-  <router-view :inventory="inventory" :addToCart="addToCart"/>
+  <router-view :inventory="inventory" :addToCart="addToCart" />
 
   <Sidebar
     v-if="showSidebar"
