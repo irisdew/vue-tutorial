@@ -14,7 +14,7 @@
       <button @click="$store.dispatch('getRandom')">randomly increase</button>
     </div>
     <div>
-      <input v-model="$store.state.colorCode" type="text" placeholder="Enter color code" >
+      <input v-model="colorCode" type="text" placeholder="Enter color code" >
     </div>
   </div>
 </template>
@@ -22,6 +22,16 @@
 <script>
 export default {
   name: 'Home',
+  computed : {
+    colorCode: {
+      get() {
+        return this.$store.state.colorCode
+      },
+      set(newValue) {
+        this.$store.commit('setColorCode', newValue)
+      }
+    }
+  }
 }
 </script>
 

@@ -15,6 +15,9 @@ export default createStore({
     },
     decrease(state) {
       state.counter--;
+    },
+    setColorCode(state, newValue) {
+      state.colorCode = newValue
     }
   },
   actions: {
