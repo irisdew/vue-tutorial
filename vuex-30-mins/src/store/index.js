@@ -3,7 +3,8 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    counter: 0
+    counter: 0,
+    colorCode: 'blue'
   },
   mutations: {
     increaseOne(state) {

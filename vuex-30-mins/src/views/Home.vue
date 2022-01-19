@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <div class="counter">{{ $store.state.counter }}</div>
+    <div :style="{ color: $store.state.colorCode }" class="counter">{{ $store.state.counter }}</div>
     <div class="counter-squared">{{ $store.state.counter }}
       <sup>2</sup>= 
       {{ $store.getters.counterSquared }}
@@ -12,6 +12,9 @@
     </div>
     <div>
       <button @click="$store.dispatch('getRandom')">randomly increase</button>
+    </div>
+    <div>
+      <input v-model="$store.state.colorCode" type="text" placeholder="Enter color code" >
     </div>
   </div>
 </template>
