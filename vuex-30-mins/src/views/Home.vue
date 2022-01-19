@@ -2,6 +2,10 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
     <div class="counter">{{ $store.state.counter }}</div>
+    <div class="counter-squared">{{ $store.state.counter }}
+      <sup>2</sup>= 
+      {{ $store.getters.counterSquared }}
+    </div>
     <div class="buttons">
       <button @click="$store.commit('decrease')">-</button>
       <button @click="$store.commit('increaseOne')">+</button>
