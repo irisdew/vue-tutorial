@@ -1,21 +1,10 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <div :style="{ color: $store.state.colorCode }" class="counter">{{ $store.state.counter }}</div>
-    <div class="counter-squared">{{ $store.state.counter }}
-      <sup>2</sup>= 
-      {{ $store.getters.counterSquared }}
-    </div>
-    <div class="buttons">
-      <button @click="$store.commit('decrease')">-</button>
-      <button @click="$store.commit('increaseOne')">+</button>
-    </div>
-    <div>
-      <button @click="$store.dispatch('getRandom')">randomly increase</button>
-    </div>
-    <div>
-      <input v-model="colorCode" type="text" placeholder="Enter color code" >
-    </div>
+    <counter />
+    <counter-squared />
+    <buttons />
+    <color-code />
   </div>
 </template>
 
@@ -31,11 +20,18 @@ export default {
         this.$store.dispatch('setColorCode', newValue)
       }
     }
+  },
+  components : {
+    'counter': require('@/components/Counter.vue').default,
+    'counter-squared': require('@/components/CounterSquared.vue').default,
+    'buttons': require('@/components/Buttons.vue').default,
+    'color-code': require('@/components/ColorCode.vue').default
   }
 }
 </script>
 
-<style scoped>
+    ColorCode
+<style>
 div {
   margin-bottom: 10px;
 }
