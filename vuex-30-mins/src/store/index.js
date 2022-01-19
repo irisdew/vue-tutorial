@@ -26,6 +26,9 @@ export default createStore({
       .then(res => {
         commit('increaseRandom', res.data)
       })
+    },
+    setColorCode({ commit }, newValue) {
+      commit('setColorCode', newValue)
     }
   },
   getters: {
