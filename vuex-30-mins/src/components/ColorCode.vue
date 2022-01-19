@@ -6,7 +6,16 @@
 
 <script>
 export default {
-
+  computed : {
+    colorCode: {
+      get() {
+        return this.$store.state.colorCode
+      },
+      set(newValue) {
+        this.$store.dispatch('setColorCode', newValue)
+      }
+    }
+  },
 }
 </script>
 

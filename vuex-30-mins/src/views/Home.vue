@@ -11,16 +11,6 @@
 <script>
 export default {
   name: 'Home',
-  computed : {
-    colorCode: {
-      get() {
-        return this.$store.state.colorCode
-      },
-      set(newValue) {
-        this.$store.dispatch('setColorCode', newValue)
-      }
-    }
-  },
   components : {
     'counter': require('@/components/Counter.vue').default,
     'counter-squared': require('@/components/CounterSquared.vue').default,
