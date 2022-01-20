@@ -21,18 +21,19 @@
         <form @submit.prevent="">
           <div class="group">
             <label>메뉴 이름</label>
-            <input type="text" />
+            <input type="text" v-model="newMeal.title" />
           </div>
 
           <div class="group">
             <label>식당 이름</label>
-            <input type="text" />
+            <input type="text" v-model="newMeal.place" />
           </div>
 
           <div class="group">
             <label>별점</label>
+            <div><span v-for="i in newMeal.star" :key="i">⭐</span></div>
             <button @click="subtrackStar">-</button>
-            <span v-for="i in newMeal.star" :key="i">⭐</span>
+            <input type="number" v-model="newMeal.star" />
             <button @click="addStar">+</button>
           </div>
 
@@ -43,7 +44,13 @@
 
           <div class="group">
             <label>설명</label>
-            <textarea name="" id="" cols="30" rows="10"></textarea>
+            <textarea
+              name=""
+              id=""
+              cols="30"
+              rows="10"
+              v-model="newMeal.description"
+            ></textarea>
           </div>
 
           <button type="submit" @click="addNewMeal">추가</button>
@@ -56,7 +63,7 @@
 
 <script>
 import { ref } from "vue";
-// import { useStore } from "vuex";
+import { useStore } from "vuex";
 
 export default {
   name: "Home",
@@ -67,6 +74,8 @@ export default {
       star: 0,
       description: "",
     });
+
+    const store = useStore();
 
     const popupOpen = ref(false);
 
@@ -91,6 +100,18 @@ export default {
         alert("메뉴 이름을 입력해주세요!");
         return;
       }
+
+      store.commit("ADD_MEAL", { ...newMeal.value });
+
+      // 초기화
+      newMeal.value = {
+        title: "",
+        place: "",
+        star: 0,
+        description: "",
+      };
+
+      togglePopup();
     };
 
     return {
