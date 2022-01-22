@@ -1,4 +1,5 @@
 <template>
+  <audio :src="song.songSrc" preload="auto" autoplay ref="audioPlayer" />
   <div class="text-white">
     <div class="flex flex-row justify-between" @click="goback">
       <button>Back</button>
@@ -19,11 +20,11 @@
         <div class="flex items-center justify-center" @click="previous">
           <button>Previous</button>
         </div>
-        <div class="flex items-center justify-center">
+        <div class="flex items-center justify-center" @click="togglePlay">
           <button
             class="rounded-full bg-yellow-300 h-24 w-24 text-black font-bold"
           >
-            Play
+            {{ isPlaying ? "Pause" : "Play" }}
           </button>
         </div>
         <div class="flex items-center justify-center" @click="next">
@@ -36,6 +37,12 @@
 
 <script>
 export default {
+  name: "SongPlayer",
+  data() {
+    return {
+      isPlaying: true,
+    };
+  },
   props: {
     song: {
       id: Number,
@@ -57,6 +64,15 @@ export default {
     },
     previous() {
       this.$emit("previous");
+    },
+    togglePlay() {
+      if (this.isPlaying) {
+        this.$refs.audioPlayer.pause();
+      } else {
+        this.$refs.audioPlayer.play();
+      }
+
+      this.isPlaying = !this.isPlaying;
     },
   },
 };
