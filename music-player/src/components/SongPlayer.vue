@@ -16,7 +16,7 @@
         <p class="text-gray-400">{{ song.year }}</p>
       </div>
       <div class="grid grid-cols-3 mt-10">
-        <div class="flex items-center justify-center">
+        <div class="flex items-center justify-center" @click="previous">
           <button>Previous</button>
         </div>
         <div class="flex items-center justify-center">
@@ -26,7 +26,7 @@
             Play
           </button>
         </div>
-        <div class="flex items-center justify-center">
+        <div class="flex items-center justify-center" @click="next">
           <button>Next</button>
         </div>
       </div>
@@ -47,10 +47,16 @@ export default {
       songSrc: String,
     },
   },
-  emits: ["goback"],
+  emits: ["goback", "next", "previous"],
   methods: {
     goback() {
       this.$emit("goback");
+    },
+    next() {
+      this.$emit("next");
+    },
+    previous() {
+      this.$emit("previous");
     },
   },
 };

@@ -28,6 +28,8 @@
     <SongPlayer
       :song="list[currentSongIndex]"
       @goback="isPlayerVisible = !isPlayerVisible"
+      @next="playNext"
+      @previous="playPrevious"
     />
   </div>
 </template>
@@ -78,6 +80,20 @@ export default {
     playSong(index) {
       this.currentSongIndex = index;
       this.isPlayerVisible = true;
+    },
+    playNext() {
+      if (this.currentSongIndex < this.list.length - 1) {
+        this.currentSongIndex += 1;
+      } else {
+        this.currentSongIndex = 0;
+      }
+    },
+    playPrevious() {
+      if (this.currentSongIndex != 0) {
+        this.currentSongIndex -= 1;
+      } else {
+        this.currentSongIndex = this.list.length - 1;
+      }
     },
   },
 };
