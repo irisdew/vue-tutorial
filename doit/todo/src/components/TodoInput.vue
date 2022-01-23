@@ -1,9 +1,21 @@
 <template>
-  <div>input</div>
+  <input type="text" v-model="newTodoItem" />
+  <button @click="addTodo">ADD</button>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      newTodoItem: "",
+    };
+  },
+  methods: {
+    addTodo() {
+      localStorage.setItem(this.newTodoItem, this.newTodoItem);
+    },
+  },
+};
 </script>
 
 <style>
