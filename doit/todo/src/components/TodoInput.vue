@@ -12,7 +12,14 @@ export default {
   },
   methods: {
     addTodo() {
-      localStorage.setItem(this.newTodoItem, this.newTodoItem);
+      if (this.newTodoItem !== "") {
+        const value = this.newTodoItem && this.newTodoItem.trim();
+        localStorage.setItem(value, value);
+        this.clearInput();
+      }
+    },
+    clearInput() {
+      this.newTodoItem = "";
     },
   },
 };
