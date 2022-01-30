@@ -4,7 +4,7 @@
       type="text"
       v-model="newTodoItem"
       placeholder="Things I have to do..."
-      @keyup.enter="addTodo"
+      @keypress.enter="addTodo"
     />
     <span class="addContainer" @click="addTodo">
       <i class="addBtn fas fa-plus" aria-hidden="true"></i>
@@ -23,12 +23,16 @@ export default {
     addTodo() {
       if (this.newTodoItem !== "") {
         const value = this.newTodoItem && this.newTodoItem.trim();
-        localStorage.setItem(value, value);
+        this.$emit("addTodo", value);
         this.clearInput();
       }
     },
     clearInput() {
       this.newTodoItem = "";
+    },
+    removeTodo(todoItem, index) {
+      localStorage.removeItem(todoItem);
+      this.todoItems.splice(index, 1);
     },
   },
 };
