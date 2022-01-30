@@ -4,19 +4,35 @@
       type="text"
       v-model="newTodoItem"
       placeholder="Things I have to do..."
+      ref="inputBox"
       @keypress.enter="addTodo"
     />
     <span class="addContainer" @click="addTodo">
       <i class="addBtn fas fa-plus" aria-hidden="true"></i>
     </span>
+
+    <Modal v-if="showModal" @close="closeModal">
+      <template v-slot:header>경고</template>
+      <template v-slot:footer @click="closeModal"
+        >할 일을 입력하세요.
+        <i
+          class="closeModalBtn fas fa-times"
+          aria-hidden="true"
+          @click="closeModal"
+        ></i>
+      </template>
+    </Modal>
   </div>
 </template>
 
 <script>
+import Modal from "./common/Modal.vue";
+
 export default {
   data() {
     return {
       newTodoItem: "",
+      showModal: false,
     };
   },
   methods: {
@@ -25,6 +41,9 @@ export default {
         const value = this.newTodoItem && this.newTodoItem.trim();
         this.$emit("addTodo", value);
         this.clearInput();
+      } else {
+        this.showModal = true;
+        this.$refs.inputBox.blur();
       }
     },
     clearInput() {
@@ -34,6 +53,12 @@ export default {
       localStorage.removeItem(todoItem);
       this.todoItems.splice(index, 1);
     },
+    closeModal() {
+      this.showModal = false;
+    },
+  },
+  components: {
+    Modal,
   },
 };
 </script>

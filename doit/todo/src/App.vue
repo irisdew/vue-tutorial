@@ -30,8 +30,10 @@ export default {
       this.todoItems = [];
     },
     addTodo(newTodoItem) {
-      localStorage.setItem(newTodoItem, newTodoItem);
-      this.todoItems.push(newTodoItem);
+      if (newTodoItem !== "") {
+        localStorage.setItem(newTodoItem, newTodoItem);
+        this.todoItems.push(newTodoItem);
+      }
     },
     removeTodo(todoItem, index) {
       localStorage.removeItem(todoItem);
