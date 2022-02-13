@@ -30,8 +30,10 @@ import { ref, onMounted } from "vue";
 
 export default {
   setup() {
-    const currentSlide = ref(2);
+    const currentSlide = ref(1);
     const getSlideCount = ref(null);
+    const autoPlayEnabled = ref(true);
+    const timeOutDuration = ref(5000);
 
     const nextSlide = () => {
       if (currentSlide.value === getSlideCount.value) {
@@ -53,11 +55,27 @@ export default {
       currentSlide.value = index + 1;
     };
 
+    const autoPlay = () => {
+      setInterval(() => {
+        nextSlide();
+      }, timeOutDuration.value);
+    };
+
+    if (autoPlayEnabled.value) {
+      autoPlay();
+    }
+
     onMounted(() => {
       getSlideCount.value = document.querySelectorAll(".slide").length;
     });
 
-    return { currentSlide, nextSlide, prevSlide, getSlideCount, goToSlide };
+    return {
+      currentSlide,
+      nextSlide,
+      prevSlide,
+      getSlideCount,
+      goToSlide,
+    };
   },
 };
 </script>
