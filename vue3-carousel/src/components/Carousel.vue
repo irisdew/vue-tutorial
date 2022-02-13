@@ -3,7 +3,7 @@
     <slot :currentSlide="currentSlide" />
 
     <!-- Navigation -->
-    <div class="navigate">
+    <div v-if="navigationEnabled" class="navigate">
       <div class="toggle-page left" @click="prevSlide">
         <i class="fas fa-chevron-left"></i>
       </div>
@@ -13,7 +13,7 @@
     </div>
 
     <!-- Pagination -->
-    <div class="pagination">
+    <div v-if="paginationEnabled" class="pagination">
       <span
         v-for="(slide, index) in getSlideCount"
         :key="index"
@@ -29,11 +29,22 @@
 import { ref, onMounted } from "vue";
 
 export default {
-  setup() {
+  props: ["autoPlay", "timeout", "navigation", "pagination"],
+  setup(props) {
     const currentSlide = ref(1);
     const getSlideCount = ref(null);
-    const autoPlayEnabled = ref(true);
-    const timeOutDuration = ref(5000);
+    const autoPlayEnabled = ref(
+      props.autoPlay === undefined ? true : props.autoPlay
+    );
+    const timeOutDuration = ref(
+      props.timeout === undefined ? 5000 : props.timeout
+    );
+    const paginationEnabled = ref(
+      props.pagination === undefined ? true : props.pagination
+    );
+    const navigationEnabled = ref(
+      props.navigation === undefined ? true : props.navigation
+    );
 
     const nextSlide = () => {
       if (currentSlide.value === getSlideCount.value) {
@@ -55,14 +66,14 @@ export default {
       currentSlide.value = index + 1;
     };
 
-    const autoPlay = () => {
+    const startAutoPlay = () => {
       setInterval(() => {
         nextSlide();
       }, timeOutDuration.value);
     };
 
     if (autoPlayEnabled.value) {
-      autoPlay();
+      startAutoPlay();
     }
 
     onMounted(() => {
@@ -75,6 +86,8 @@ export default {
       prevSlide,
       getSlideCount,
       goToSlide,
+      paginationEnabled,
+      navigationEnabled,
     };
   },
 };
